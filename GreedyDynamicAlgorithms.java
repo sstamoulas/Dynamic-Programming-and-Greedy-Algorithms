@@ -16,7 +16,41 @@ public class GreedyDynamicAlgorithms {
 	 */
 	public static int optimalIntervals(ArrayList<Interval> red, ArrayList<Interval> blue) {
 		//TODO
-		return -1;
+		Interval.sortByFinishTime(red);
+		Interval.sortByStartTime(blue);
+		int count = 0;
+		int index = 0;
+		boolean redIntervalFound = true;
+		
+		for(int i = 0; i < blue.size() && redIntervalFound; i++) {
+			if(i == 0 || red.get(index).finish < blue.get(i).start) {
+				redIntervalFound = false;
+				for(int j = index; j < red.size(); j++) {
+					if(isInInterval(red, blue, j, i)) {
+						index = j;
+						redIntervalFound = true;
+					}
+				}
+				if(redIntervalFound) {
+					count++;
+				}
+				else {
+					count = -1;
+				}
+			}
+		}
+		
+		return count;
+	}
+	
+	public static boolean isInInterval(ArrayList<Interval> red, ArrayList<Interval> blue, int redIndex, int blueIndex) {
+		if(blue.get(blueIndex).start <= red.get(redIndex).start && blue.get(blueIndex).finish >= red.get(redIndex).start || 
+		   blue.get(blueIndex).start <= red.get(redIndex).finish && blue.get(blueIndex).finish >= red.get(redIndex).finish) {
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	
 	/**
