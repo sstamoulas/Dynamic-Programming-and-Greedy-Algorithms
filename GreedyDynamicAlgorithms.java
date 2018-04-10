@@ -1,6 +1,5 @@
 package dynamicProgramming;
 
-
 import java.util.*;
 
 public class GreedyDynamicAlgorithms {
@@ -62,7 +61,61 @@ public class GreedyDynamicAlgorithms {
 	 */
 	public static List<Direction> optimalGridPath(int[][] grid) {
 		//TODO
-		return null;
+		List<Direction> lst = new ArrayList<>();
+		int[][] optGrid = new int[grid.length][grid[0].length];
+		
+		optimizeGrid(grid, optGrid);
+		optimizeGridPath(optGrid, lst, grid.length - 1, grid[0].length - 1);
+		
+		return lst;
+	}
+	
+	public static void optimizeGrid(int[][] grid, int[][] optGrid) {
+		int row = grid.length;
+		int col = grid[0].length;
+
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < col; j++) {
+				if(i == 0 && j == 0) {
+					optGrid[i][j] = grid[i][j];
+				}
+				else if(i == 0 && j != 0) {
+					optGrid[i][j] = grid[i][j] + optGrid[i][j - 1];
+				}
+				else if(i != 0 && j == 0) {
+					optGrid[i][j] = grid[i][j] + optGrid[i - 1][j];
+				}
+				else {
+					if(optGrid[i][j - 1] > optGrid[i - 1][j]) {
+						optGrid[i][j] = grid[i][j] + optGrid[i - 1][j];
+					}
+					else {
+						optGrid[i][j] = grid[i][j] + optGrid[i][j - 1];
+					}
+				}
+			}
+		}
+	}
+	
+	public static void optimizeGridPath(int[][] grid, List<Direction> lst, int rowIndex, int colIndex) {
+		while(rowIndex != 0 || colIndex != 0) {
+			if(rowIndex <= 0) {
+				colIndex--;
+				lst.add(0, Direction.RIGHT);
+			}
+			else if(colIndex <= 0) {
+				rowIndex--;
+				lst.add(0, Direction.DOWN);
+			}
+			else if(grid[rowIndex - 1][colIndex] < grid[rowIndex][colIndex - 1]) {
+				rowIndex--;
+				lst.add(0, Direction.DOWN);
+			}
+			else {
+				colIndex--;
+				lst.add(0, Direction.RIGHT);
+			}
+		}
 	}
 	
 	/**
