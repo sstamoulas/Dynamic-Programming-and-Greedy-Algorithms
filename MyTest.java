@@ -3,6 +3,8 @@ package dynamicProgramming;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MyTest {
 	
@@ -18,6 +20,95 @@ public class MyTest {
 		String encoding = h.encode();
 		assertEquals(input, h.decode(encoding));
 		assertEquals("huffman abc compression", Huffman.compressionRatio(input), 0.20833, 0.01);
+	}
+	
+	@Test
+	public void OptimalGridPathTest1() {
+		int[][] grid = {{5,1,1},{2,4,7},{2,4,5},{5,6,3}};  
+		List<GreedyDynamicAlgorithms.Direction> expectedOptimal = new LinkedList<>();
+		
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		
+		List<GreedyDynamicAlgorithms.Direction> actualOptimal = GreedyDynamicAlgorithms.optimalGridPath(grid);
+		assertEquals("optimal path", expectedOptimal, actualOptimal);
+	}
+	
+	@Test
+	public void OptimalGridPathTest2() {
+		int[][] grid = {{5,1,1},{2,4,7},{2,4,5},{5,6,3},{1,2,3}};  
+		List<GreedyDynamicAlgorithms.Direction> expectedOptimal = new LinkedList<>();
+		
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		
+		List<GreedyDynamicAlgorithms.Direction> actualOptimal = GreedyDynamicAlgorithms.optimalGridPath(grid);
+		assertEquals("optimal path", expectedOptimal, actualOptimal);
+	}
+	
+	@Test
+	public void OptimalGridPathTest3() {
+		int[][] grid = {{5,1,1,2},{2,4,7,5},{2,4,5,3},{5,6,3,2}};  
+		List<GreedyDynamicAlgorithms.Direction> expectedOptimal = new LinkedList<>();
+		
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		
+		List<GreedyDynamicAlgorithms.Direction> actualOptimal = GreedyDynamicAlgorithms.optimalGridPath(grid);
+		assertEquals("optimal path", expectedOptimal, actualOptimal);
+	}
+	
+	@Test
+	public void OptimalGridPathTest4() {
+		int[][] grid = {{1, 1, 50},{5, 10, 50},{6, 4, 4}};  
+		List<GreedyDynamicAlgorithms.Direction> expectedOptimal = new LinkedList<>();
+		
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		
+		List<GreedyDynamicAlgorithms.Direction> actualOptimal = GreedyDynamicAlgorithms.optimalGridPath(grid);
+		assertEquals("optimal path", expectedOptimal, actualOptimal);
+	}
+	
+	@Test
+	public void OptimalGridPathTest5() {
+		int[][] grid = {{1, 2},{3, 4}};  
+		List<GreedyDynamicAlgorithms.Direction> expectedOptimal = new LinkedList<>();
+		
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		
+		List<GreedyDynamicAlgorithms.Direction> actualOptimal = GreedyDynamicAlgorithms.optimalGridPath(grid);
+		assertEquals("optimal path", expectedOptimal, actualOptimal);
+	}
+	
+	@Test
+	public void OptimalGridPathTest6() {
+		int[][] grid = {{1, 7, 9, 2},{8, 6, 3, 2}, {1, 6, 7, 8}, {2, 9, 8, 2}};  
+		List<GreedyDynamicAlgorithms.Direction> expectedOptimal = new LinkedList<>();
+		
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.RIGHT);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		expectedOptimal.add(GreedyDynamicAlgorithms.Direction.DOWN);
+		
+		List<GreedyDynamicAlgorithms.Direction> actualOptimal = GreedyDynamicAlgorithms.optimalGridPath(grid);
+		assertEquals("optimal path", expectedOptimal, actualOptimal);
 	}
 	
 	@Test
