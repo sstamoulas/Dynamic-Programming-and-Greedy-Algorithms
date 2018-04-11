@@ -36,14 +36,58 @@ public class Huffman {
 		 * Remember to store the final tree as a global variable, as you will need it
 		 * to decode your encrypted string
 		 */
+		
+		//add all nodes to the priority queue
+		for (Map.Entry<Character, Integer> entry : freqMap.entrySet())
+		{
+			huffman.add(new Node(entry.getKey(), entry.getValue(), null, null));
+		}
+		
+		//continually merge the two lowest-frequency nodes until only one tree remains in the queue
+		while(huffman.size() > 1) {
+			Node left = huffman.poll();
+			Node right = huffman.poll();
+			Node newNode = new Node(null, left.freq + right.freq, left, right);
+			huffman.add(newNode);
+		}
+		
+		//Remember to store the final tree as a global variable, as you will need it
+		//to decode your encrypted string
+		huffmanTree = huffman.poll();
+		
+		if(huffmanTree.isLeaf()) {
+			huffmanTree.freq = input.length();
+		}
+		
+		//Use this tree to create a mapping from characters (the leaves) 
+		//to their binary strings (the path along the tree to that leaf)
+		constructBinary(huffmanTree, "");
+	}
+	
+	private void constructBinary(Node el, String bin) {
+		
+		if(el.isLeaf()) {
+			mapping.put(el.letter, bin);
+		}
+		else {
+			if(el.left != null) {
+				constructBinary(el.left, bin + "0");
+			}
+			if(el.right != null) {
+				constructBinary(el.right, bin + "1");
+			}
+		}
 	}
 	
 	/**
 	 * Use the global mapping to convert your input string into a binary string
 	 */
 	public String encode() {
-		//TODO
-		return null;
+		String result = "";
+		for(int i = 0; i < input.length(); i++) {
+			result += mapping.get(input.charAt(i));
+		}
+		return result;
 	}
 	
 	/**
@@ -56,8 +100,29 @@ public class Huffman {
 	 * @return the original string (should be the same as "input")
 	 */
 	public String decode(String encoding) {
-		//TODO
-		return null;
+		String result = "";
+		Node el = huffmanTree;
+		if(!encoding.isEmpty()) {
+			for(int i = 0; i < encoding.length(); i++) {
+				if(el.isLeaf()) {
+					result += el.letter.toString();
+					el = huffmanTree;
+					i--;
+				}
+				else if(encoding.charAt(i) == '0') {
+					el = el.left;
+				}
+				else if(encoding.charAt(i) == '1') {
+					el = el.right;
+				}
+			}
+		}
+		else {
+			for(int i = 1; i < huffmanTree.freq; i++) {
+				result += huffmanTree.letter.toString();
+			}
+		}
+		return result + el.letter.toString();
 	}
 	
 	/**
