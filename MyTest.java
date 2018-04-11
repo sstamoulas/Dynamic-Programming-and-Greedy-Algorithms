@@ -14,12 +14,30 @@ public class MyTest {
 	 */
 	
 	@Test
-	public void HuffmanSampleTest() {
+	public void HuffmanSampleTest1() {
 		String input = "abc";
 		Huffman h = new Huffman(input);
 		String encoding = h.encode();
 		assertEquals(input, h.decode(encoding));
 		assertEquals("huffman abc compression", Huffman.compressionRatio(input), 0.20833, 0.01);
+	}
+	
+	@Test
+	public void HuffmanSampleTest2() {
+		String input = "baba";
+		Huffman h = new Huffman(input);
+		String encoding = h.encode();
+		assertEquals(input, h.decode(encoding));
+		assertEquals("huffman abc compression", Huffman.compressionRatio(input), 0.125, 0.01);
+	}
+	
+	@Test
+	public void HuffmanSampleTest3() {
+		String input = "aaaa";
+		Huffman h = new Huffman(input);
+		String encoding = h.encode();
+		assertEquals(input, h.decode(encoding));
+		assertEquals("huffman abc compression", Huffman.compressionRatio(input), 0.0, 0.01);
 	}
 	
 	@Test
